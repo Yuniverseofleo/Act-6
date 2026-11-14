@@ -21,9 +21,7 @@ pipeline {
         script {
           def scannerHome = tool 'SonarScanner'
           withSonarQubeEnv('SonarQube-Lab') {
-            withEnv(["SCANNER_HOME=${scannerHome}"]) {
-              sh '"$SCANNER_HOME/bin/sonar-scanner"'
-            }
+            sh "\"${scannerHome}/bin/sonar-scanner\" -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.token=${SONAR_AUTH_TOKEN}"
           }
         }
       }
@@ -58,4 +56,3 @@ pipeline {
     failure { echo 'Inspect the failed stage and SonarQube dashboard.' }
   }
 }
-
